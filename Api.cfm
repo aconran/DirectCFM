@@ -4,4 +4,5 @@
 <cfset args['desc'] = "APIDesc" />
 <cfinvoke component="Direct" method="getAPIScript" argumentcollection="#args#" returnVariable="apiScript" />
 <cfcontent reset="true" />
+<cfheader name="Content-Type" value="text/javascript" />
 <cfoutput>#apiScript#</cfoutput>
