@@ -22,28 +22,28 @@
 		<cfset var args = StructNew() />
 	
 		<!--- find the methods index in the metadata --->	
-		<cfset newCfComponentMeta = GetComponentMetaData(request.action) />	
+		<cfset newCfComponentMeta = GetComponentMetaData(arguments.request.action) />	
 
 		<cfloop from="1" to="#arrayLen(newCfComponentMeta.Functions)#" index="idx">		
-			<cfif newCfComponentMeta.Functions[idx]['name'] eq request.method>
+			<cfif newCfComponentMeta.Functions[idx]['name'] eq arguments.request.method>
 				<cfset mthIdx = idx />
 				<cfbreak />
 			</cfif>
 		</cfloop>		
 	
-		<cfif NOT IsArray(request.data)>
+		<cfif NOT IsArray(arguments.request.data)>
 			<cfset maxParams = 0 />
-		<cfelseif ArrayLen(request.data) lt ArrayLen(newCfComponentMeta.Functions[mthIdx].parameters)>
-			<cfset maxParams = ArrayLen(request.data) />
+		<cfelseif ArrayLen(arguments.request.data) lt ArrayLen(newCfComponentMeta.Functions[mthIdx].parameters)>
+			<cfset maxParams = ArrayLen(arguments.request.data) />
 		<cfelse>
 			<cfset maxParams = ArrayLen(newCfComponentMeta.Functions[mthIdx].parameters) />
 		</cfif>
 		<!--- marry the parameters in the metadata to params passed in the request. --->		
 		<cfloop from="0" to="#maxParams - 1#" index="idx">
-			<cfset args[newCfComponentMeta['Functions'][mthIdx].parameters[idx+1].name] = request.data[idx+1] />
+			<cfset args[newCfComponentMeta['Functions'][mthIdx].parameters[idx+1].name] = arguments.request.data[idx+1] />
 		</cfloop>
 	
-		<cfinvoke component="#request.Action#" method="#request.method#" argumentcollection="#args#" returnvariable="result">
+		<cfinvoke component="#arguments.request.Action#" method="#arguments.request.method#" argumentcollection="#args#" returnvariable="result">
 		<cfreturn result />
 	</cffunction>
 	

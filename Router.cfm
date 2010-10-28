@@ -1,5 +1,5 @@
 <!--- Determine if this is a field post. --->
-<cfif NOT StructIsEmpty(form)>
+<cfif NOT StructIsEmpty(form) and isDefined('form.extTID') and isDefined('form.extAction') and isDefined('form.extMethod')>
 	<cfset jsonPacket = StructNew() />
 	<cfset jsonPacket['tid'] = form.extTID />
 	<cfset jsonPacket['action'] = form.extAction />
