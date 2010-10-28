@@ -12,9 +12,10 @@
 		<cfset var mthIdx = 1 />
 		<cfset var result = '' />
 		<cfset var args = StructNew() />
+		<cfset var maxParams = '' />
 	
 		<!--- find the methods index in the metadata --->	
-		<cfset newCfComponentMeta = GetComponentMetaData(arguments.request.action) />	
+		<cfset var newCfComponentMeta = GetComponentMetaData(arguments.request.action) />	
 
 		<cfloop from="1" to="#arrayLen(newCfComponentMeta.Functions)#" index="idx">		
 			<cfif newCfComponentMeta.Functions[idx]['name'] eq arguments.request.method>
@@ -43,6 +44,7 @@
 		<cfargument name="ns" />
 		<cfargument name="desc" />
 
+        <cfset var i = '' />
 		<cfset var totalCFCs = '' />
 		<cfset var cfcName = '' />
 		<cfset var CFCApi = '' />
