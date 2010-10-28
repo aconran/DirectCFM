@@ -56,7 +56,7 @@
 		<cfset var jsonPacket = StructNew() />		
 		<cfset jsonPacket['url'] = variables.routerUrl />
 		<cfset jsonPacket['type'] = variables.remotingType />
-		<cfset jsonPacket['namespace'] = 'Ext.ss' />
+		<cfset jsonPacket['namespace'] = arguments.ns />
 		<cfset jsonPacket['actions'] = StructNew() />
 
 		<cfdirectory action="list" directory="#expandPath('.')#" name="totalCFCs" filter="*.cfc" recurse="false" />
