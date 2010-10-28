@@ -3,7 +3,15 @@
 	<cfset variables.remotingType = 'remoting' />
 	
 	<cffunction name="getPostBody" returnType="string" output="false">
-        <cfreturn toString(getHttpRequestData().content) />
+	   <cfscript>
+	      var size=GetPageContext().getRequest().getContentLength();
+	      var emptyByteArray = createObject("java", "java.io.ByteArrayOutputStream").init().toByteArray();
+	      var byteClass = createObject("java", "java.lang.Byte").TYPE;	      
+	      var byteArray = createObject("java","java.lang.reflect.Array").newInstance(byteClass, size);
+	      GetPageContext().getRequest().getInputStream().readLine(byteArray, 0, size);
+	      createObject('java', 'java.lang.System').out.println("{GetJSONRequest} ByteArray.ToString=" &ToString( byteArray ) );
+	      return ToString( byteArray );
+	   </cfscript>
 	</cffunction>
 
 	<cffunction name="invokeCall">
