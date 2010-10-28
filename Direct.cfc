@@ -43,6 +43,7 @@
 	<cffunction name="getAPIScript">
 		<cfargument name="ns" />
 		<cfargument name="desc" />
+		<cfargument name="format" default="javascript" />
 
         <cfset var i = '' />
 		<cfset var totalCFCs = '' />
@@ -83,8 +84,11 @@
 				<cfset jsonPacket['actions'][cfcName] = CFCApi />
 			</cfif>
 		</cfloop>
-
-		<cfoutput><cfsavecontent variable="script">Ext.ns('#arguments.ns#');#arguments.ns#.#desc# = #SerializeJson(jsonPacket)#;</cfsavecontent></cfoutput>
+		
+		<cfset script = SerializeJSON(jsonPacket) />
+		<cfif arguments.format eq "javascript">
+    		<cfoutput><cfsavecontent variable="script">Ext.ns('#arguments.ns#');#arguments.ns#.#desc# = #script#;</cfsavecontent></cfoutput>
+    	</cfif>
 		<cfreturn script />
 	</cffunction>
 </cfcomponent>
